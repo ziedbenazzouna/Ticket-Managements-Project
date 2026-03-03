@@ -1,0 +1,29 @@
+﻿@page "/login"
+
+
+@if (isLoading)
+{
+    <MudProgressCircular Indeterminate="true" Color="Color.Primary" Size="Size.Large" Class="d-flex mx-auto mt-12" />
+}
+else
+{
+    <MudPaper Class="pa-6 mx-auto mt-20" Style="max-width:400px">
+        <MudText Typo="Typo.h5" Class="mb-4">Login</MudText>
+
+        <MudTextField @bind-Value="model.Username" Label="Username" Required="true" FullWidth="true" />
+        <MudTextField @bind-Value="model.Password" Label="Password" InputType="InputType.Password" Required="true" FullWidth="true" Class="mt-3" />
+
+        <MudButton OnClick="HandleLogin" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" Class="mt-4">
+            Login
+        </MudButton>
+
+        <MudText Class="mt-4" Align="Align.Center">
+            Pas de compte ? <MudLink Href="/register">S'inscrire</MudLink>
+        </MudText>
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <MudAlert Severity="Severity.Error" Class="mt-3">@errorMessage</MudAlert>
+        }
+    </MudPaper>
+}

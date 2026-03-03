@@ -1,0 +1,46 @@
+﻿@page "/register"
+
+<MudPaper Class="pa-6 mx-auto mt-20" Style="max-width:400px">
+    <MudText Typo="Typo.h5" Class="mb-4">Créer un compte</MudText>
+
+    <MudTextField @bind-Value="model.Username"
+                  Label="Nom d'utilisateur"
+                  Required="true"
+                  FullWidth="true" />
+
+    <MudTextField @bind-Value="model.Password"
+                  Label="Mot de passe"
+                  InputType="InputType.Password"
+                  Required="true"
+                  FullWidth="true"
+                  Class="mt-3" />
+
+    <MudTextField @bind-Value="model.ConfirmPassword"
+                  Label="Confirmer le mot de passe"
+                  InputType="InputType.Password"
+                  Required="true"
+                  FullWidth="true"
+                  Class="mt-3" />
+
+    <MudButton OnClick="HandleRegister"
+               Variant="Variant.Filled"
+               Color="Color.Primary"
+               FullWidth="true"
+               Class="mt-4"
+               Disabled="_isProcessing">
+        @if (_isProcessing)
+        {
+        <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="mr-2" />
+        }
+        S'inscrire
+    </MudButton>
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <MudAlert Severity="Severity.Error" Class="mt-3">@errorMessage</MudAlert>
+    }
+
+    <MudText Class="mt-4" Align="Align.Center">
+        Déjà un compte ? <MudLink Href="/login">Se connecter</MudLink>
+    </MudText>
+</MudPaper>

@@ -1,0 +1,49 @@
+## --- [ DOTNET & VISUAL STUDIO ] ---
+## Ignore les dossiers de compilation (bin/ et obj/)
+[Bb]in/
+[Oo]bj/
+
+## Ignore les fichiers de cache et de configuration utilisateur
+.vs/
+.vscode/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+
+## --- [ WEB API & BLAZOR ] ---
+## Fichiers de configuration sensibles (Secrets & Env)
+appsettings.Development.json
+.env
+usersecrets.json
+
+## Blazor WebAssembly : fichiers de cache et de distribution
+wwwroot/dist/
+wwwroot/_framework/
+.razor-cache/
+
+## --- [ TESTS (xUnit) ] ---
+## Résultats de tests et rapports de couverture de code
+TestResults/
+*.trx
+*.coveragereport
+*.coveragexml
+edge/
+
+## --- [ OS & OUTILS ] ---
+## macOS
+.DS_Store
+
+## Windows
+Thumbs.db
+
+## Node.js (Si vous utilisez des librairies JS ou CSS via npm dans Blazor)
+node_modules/
+npm-debug.log*
+
+## --- [ RÉFÉRENCES DE PACKAGES ] ---
+## NuGet Packages
+*.nupkg
+# On ne versionne pas les packages eux-mêmes
+packages/
+!packages/build/

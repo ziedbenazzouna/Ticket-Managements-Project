@@ -1,0 +1,68 @@
+﻿@page "/ticket"
+
+@using TicketManagementProject.Blazor.ViewModels
+
+<PageTitle>Home</PageTitle>
+
+<h2 class="text-center">Tickets Management</h2>
+
+<MudDataGrid @ref="dataGrid" T="TicketViewModel" ServerData="ServerReload" Filterable="false">
+    <ToolBarContent>
+        <MudButton Class="me-2"
+                   @onclick="CreateNewTicket"
+                   StartIcon="@Icons.Material.Filled.PersonAddAlt1"
+                   Variant="Variant.Filled"
+                   Color="Color.Primary">
+             New Ticket
+        </MudButton>
+        <MudSpacer />
+        <MudTextField T="string"
+                      ValueChanged="@(s => OnSearch(s))"
+                      Placeholder="Search"
+                      Adornment="Adornment.Start"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      IconSize="Size.Medium"
+                      Class="mt-0">
+        </MudTextField>
+    </ToolBarContent>
+
+    <Columns>
+        <PropertyColumn Property="x => x.Objet" Title="Objet" />
+        <PropertyColumn Property="x => x.Auteur" Title="Auteur" />
+        <PropertyColumn Property="x => x.Date" Format="dd MMMM yyyy" Title="Date" />
+        <PropertyColumn Property="x => x.Categorie" />
+        <PropertyColumn Property="x => x.Statut" />
+
+        <TemplateColumn CellClass="d-flex justify-end">
+            <CellTemplate>
+                <MudButton Class="me-2"
+                           Size="@Size.Small"
+                           Variant="Variant.Filled"
+                           StartIcon="@Icons.Material.Filled.Visibility"
+                           Color="@Color.Info"
+                           OnClick="@(() => ViewTicket(context))">
+                    Détails
+                </MudButton>
+                <MudButton Class="me-2"
+                           Size="@Size.Small"
+                           Variant="Variant.Filled"
+                           StartIcon="@Icons.Material.Filled.Edit"
+                           Color="@Color.Warning"
+                           OnClick="@(() => UpdateTicket(context))">
+                    Update
+                </MudButton>
+                <MudButton Size="@Size.Small"
+                           Variant="Variant.Filled"
+                           StartIcon="@Icons.Material.Filled.Delete"
+                           Color="@Color.Error"
+                           OnClick="@(() => RemoveTicket(context))">
+                    Delete
+                </MudButton>
+            </CellTemplate>
+        </TemplateColumn>
+    </Columns>
+
+    <PagerContent>
+        <MudDataGridPager T="TicketViewModel" />
+    </PagerContent>
+</MudDataGrid>

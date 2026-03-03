@@ -1,0 +1,64 @@
+﻿@page "/"
+
+@inject CustomAuthStateProvider AuthProvider
+@inject NavigationManager Navigation
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using TicketManagementProject.Blazor.Services
+@attribute [Authorize]
+
+<AuthorizeView>
+    <Authorized>
+        <MudPaper Elevation="3" Class="pa-8 mt-20" Style="border-radius: 12px; background: linear-gradient(145deg, #ffffff, #f0f4f8);">
+
+            <MudStack Spacing="4">
+                @* Titre Principal *@
+                <MudText Typo="Typo.h3" Color="Color.Primary" Class="fw-bold">
+                    Bienvenue, @context.User.Identity?.Name !
+                </MudText>
+
+                @* Description *@
+                <MudText Typo="Typo.h6" Color="Color.Secondary" Style="opacity: 0.8">
+                    Bienvenue dans votre interface de gestion de tickets.
+                    Ici, vous pouvez suivre, créer et gérer vos demandes en toute simplicité.
+                </MudText>
+
+                <MudDivider Class="my-4" />
+
+                @* Badge de Rôle *@
+                <div class="d-flex align-center gap-3">
+                    <MudText Typo="Typo.body1"><b>Votre rôle actuel :</b></MudText>
+                    @foreach (var role in context.User.Claims.Where(c => c.Type == System.Security.Claims.ClaimTypes.Role))
+                    {
+                        <MudChip T="string" Color="Color.Info" Variant="Variant.Filled" Size="Size.Small">
+                            @role.Value
+                        </MudChip>
+                    }
+                </div>
+                @if (context.User.IsInRole("Admin"))
+                {
+                    @* Bouton d'action rapide *@
+                    <MudButton Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           Size="Size.Large"
+                           Href="/ticket"
+                           StartIcon="@Icons.Material.Filled.ConfirmationNumber"
+                           Class="mt-6 rounded-pill"
+                           Style="width: fit-content">
+                    Accéder aux Tickets
+                </MudButton>
+                }
+            </MudStack>
+
+        </MudPaper>
+    </Authorized>
+
+    <NotAuthorized>
+        @* Ce bloc ne s'affichera normalement pas grâce au RedirectToLogin de App.razor *@
+        <MudAlert Severity="Severity.Warning">Veuillez vous connecter.</MudAlert>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+
+

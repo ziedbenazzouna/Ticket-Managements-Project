@@ -1,0 +1,65 @@
+﻿@using TicketManagementProject.Blazor.Services
+@using Microsoft.AspNetCore.Components.Authorization
+@inherits LayoutComponentBase
+
+@inject CustomAuthStateProvider AuthProvider
+@inject NavigationManager Navigation
+
+@* Required *@
+<MudThemeProvider />
+<MudPopoverProvider />
+
+@* Needed for dialogs *@
+<MudDialogProvider />
+
+@* Needed for snackbars *@
+<MudSnackbarProvider />
+
+<MudAppBar Elevation="4">
+    <MudText Typo="Typo.h6">Ticket Management</MudText>
+
+    @* PREMIER SPACER : Pousse le menu au centre *@
+    <MudSpacer />
+
+    <AuthorizeView>
+        <Authorized>
+            @* CONTENEUR CENTRAL *@
+            <div class="d-flex align-center gap-4">
+                <MudButton Href="/" Variant="Variant.Text" Color="Color.Inherit">Home</MudButton>
+
+                @if (context.User.IsInRole("Admin"))
+                {
+                    <MudButton Href="/ticket" Variant="Variant.Text" Color="Color.Inherit">Tickets</MudButton>
+                }
+            </div>
+
+            @* DEUXIÈME SPACER : Pousse le bouton Logout à l'extrémité droite *@
+            <MudSpacer />
+
+            @* BOUTON À DROITE *@
+            <MudButton Color="Color.Error"
+                       Variant="Variant.Filled"
+                       OnClick="Logout">
+                Logout
+            </MudButton>
+        </Authorized>
+    </AuthorizeView>
+</MudAppBar>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-5">
+    @Body
+</MudContainer>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>
+
+@code {
+    private async Task Logout()
+    {
+        await AuthProvider.Logout();
+        Navigation.NavigateTo("/login", true);
+    }
+}
