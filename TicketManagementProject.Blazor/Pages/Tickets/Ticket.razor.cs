@@ -6,7 +6,7 @@ using TicketManagementProject.Blazor.Enum;
 using TicketManagementProject.Blazor.Services;
 using TicketManagementProject.Blazor.ViewModels;
 
-namespace TicketManagementProject.Blazor.Pages
+namespace TicketManagementProject.Blazor.Pages.Tickets
 {
     [Authorize(Roles = "Admin")]
     public partial class Ticket

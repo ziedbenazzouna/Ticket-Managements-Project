@@ -6,7 +6,7 @@ using TicketManagementProject.Blazor.Services;
 using TicketManagementProject.Blazor.ViewModels;
 
 
-namespace TicketManagementProject.Blazor.Pages
+namespace TicketManagementProject.Blazor.Pages.Tickets
 {
     public partial class CreateOrUpdateTicket
     {

@@ -4,7 +4,7 @@ using TicketManagementProject.Blazor.Services;
 using TicketManagementProject.Blazor.ViewModels;
 
 
-namespace TicketManagementProject.Blazor.Pages
+namespace TicketManagementProject.Blazor.Pages.User
 {
     public partial class Login
     {
