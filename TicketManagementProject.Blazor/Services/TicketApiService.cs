@@ -39,5 +39,12 @@ namespace TicketManagementProject.Blazor.Services
             var response = await _http.PutAsJsonAsync("api/tickets", model);
             return response.IsSuccessStatusCode;
         }
+
+        public async Task<bool> PatchTicket(string id, string fieldName, object value)
+        {
+            var patchData = new Dictionary<string, object> { { fieldName, value } };
+            var response = await _http.PatchAsJsonAsync($"api/tickets/{id}", patchData);
+            return response.IsSuccessStatusCode;
+        }
     }
 }

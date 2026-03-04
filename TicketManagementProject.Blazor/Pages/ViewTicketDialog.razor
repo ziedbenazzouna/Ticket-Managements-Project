@@ -1,4 +1,5 @@
-﻿<MudDialog>
+﻿@using TicketManagementProject.Blazor.Enum
+<MudDialog>
     <TitleContent>
         <MudText Typo="Typo.h6">
             <MudIcon Icon="@Icons.Material.Filled.Assignment" Class="mr-3 mb-n1" />
@@ -36,7 +37,7 @@
             <MudItem xs="6">
                 <MudText Typo="Typo.caption" Class="mud-text-secondary">Statut Actuel</MudText>
                 <div class="mt-1">
-                    <MudChip T="string" Color="@GetStatutColor(model.StatutEnum)" Variant="Variant.Filled" Size="Size.Small">
+                    <MudChip T="string" Color="@model.StatutEnum.GetColor()" Variant="Variant.Filled" Size="Size.Small">
                         @model.StatutEnum
                     </MudChip>
                 </div>
@@ -44,6 +45,16 @@
         </MudGrid>
     </DialogContent>
     <DialogActions>
-        <MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="Close" Class="px-10">Fermer</MudButton>
+        @if (model.StatutEnum != StatutIntervention.Closed)
+        {
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Error"
+                       StartIcon="@Icons.Material.Filled.CheckCircle"
+                       OnClick="CloturerTicket"
+                       Class="px-6">
+                Clôturer
+            </MudButton>
+        }
+        <MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="Cancel" Class="px-10">Fermer</MudButton>
     </DialogActions>
 </MudDialog>

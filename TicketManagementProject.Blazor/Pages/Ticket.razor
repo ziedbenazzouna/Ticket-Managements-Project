@@ -6,14 +6,14 @@
 
 <h2 class="text-center">Tickets Management</h2>
 
-<MudDataGrid @ref="dataGrid" T="TicketViewModel" ServerData="ServerReload" Filterable="false">
+<MudDataGrid @ref="dataGrid" T="TicketViewModel" ServerData="ServerReload" Filterable="false" Breakpoint="Breakpoint.Sm">
     <ToolBarContent>
         <MudButton Class="me-2"
                    @onclick="CreateNewTicket"
                    StartIcon="@Icons.Material.Filled.PersonAddAlt1"
                    Variant="Variant.Filled"
                    Color="Color.Primary">
-             New Ticket
+            <span class="d-none d-sm-inline">Nouveau Ticket</span>
         </MudButton>
         <MudSpacer />
         <MudTextField T="string"
@@ -31,17 +31,32 @@
         <PropertyColumn Property="x => x.Auteur" Title="Auteur" />
         <PropertyColumn Property="x => x.Date" Format="dd MMMM yyyy" Title="Date" />
         <PropertyColumn Property="x => x.Categorie" />
-        <PropertyColumn Property="x => x.Statut" />
+        <TemplateColumn Title="Statut" SortBy="@(x => x.Statut)">
+            <CellTemplate Context="context">
+                <div style="display: flex; align-items: center; height: 100%;">
+                    <MudChip T="string"
+                             Color="@context.Item.StatutEnum.GetColor()"
+                             Variant="Variant.Filled"
+                             Size="Size.Small"
+                             Class="ma-0">
+                        @context.Item.StatutEnum
+                    </MudChip>
+                </div>
+            </CellTemplate>
+        </TemplateColumn>
 
-        <TemplateColumn CellClass="d-flex justify-end">
+
+        <TemplateColumn CellClass="d-flex justify-end"
+                        >
             <CellTemplate>
+                 <div class="d-flex">
                 <MudButton Class="me-2"
                            Size="@Size.Small"
                            Variant="Variant.Filled"
                            StartIcon="@Icons.Material.Filled.Visibility"
                            Color="@Color.Info"
                            OnClick="@(() => ViewTicket(context))">
-                    Détails
+                        <span class="d-none d-sm-inline">Consuler</span>
                 </MudButton>
                 <MudButton Class="me-2"
                            Size="@Size.Small"
@@ -49,15 +64,16 @@
                            StartIcon="@Icons.Material.Filled.Edit"
                            Color="@Color.Warning"
                            OnClick="@(() => UpdateTicket(context))">
-                    Update
+                        <span class="d-none d-sm-inline">Modifier</span>
                 </MudButton>
                 <MudButton Size="@Size.Small"
                            Variant="Variant.Filled"
                            StartIcon="@Icons.Material.Filled.Delete"
                            Color="@Color.Error"
                            OnClick="@(() => RemoveTicket(context))">
-                    Delete
+                        <span class="d-none d-sm-inline">Supprimer</span>
                 </MudButton>
+                </div>
             </CellTemplate>
         </TemplateColumn>
     </Columns>

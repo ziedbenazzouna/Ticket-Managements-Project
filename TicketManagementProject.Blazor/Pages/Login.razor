@@ -10,11 +10,11 @@ else
     <MudPaper Class="pa-6 mx-auto mt-20" Style="max-width:400px">
         <MudText Typo="Typo.h5" Class="mb-4">Login</MudText>
 
-        <MudTextField @bind-Value="model.Username" Label="Username" Required="true" FullWidth="true" />
-        <MudTextField @bind-Value="model.Password" Label="Password" InputType="InputType.Password" Required="true" FullWidth="true" Class="mt-3" />
+        <MudTextField @bind-Value="model.Username" Label="Nom d'utilisateur" Required="true" FullWidth="true" />
+        <MudTextField @bind-Value="model.Password" Label="Mot de passe" InputType="InputType.Password" Required="true" FullWidth="true" Class="mt-3" />
 
         <MudButton OnClick="HandleLogin" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true" Class="mt-4">
-            Login
+            Se connecter
         </MudButton>
 
         <MudText Class="mt-4" Align="Align.Center">

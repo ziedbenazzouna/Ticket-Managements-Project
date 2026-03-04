@@ -96,11 +96,6 @@ namespace TicketManagementProject.Blazor.Pages
 
         private async Task ViewTicket(CellContext<TicketViewModel> ticket)
         {
-            //var parameters = new DialogParameters<ViewTicketDialog> { { x => x.Ticket, ticket } };
-            //var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.Small, FullWidth = true };
-
-            //await DialogService.ShowAsync<ViewTicketDialog>("Détails du Ticket", parameters, options);
-
             var ticketView = await TicketService.GetTicket(ticket.Item.Id);
             if (ticketView is null)
             {
@@ -118,6 +113,11 @@ namespace TicketManagementProject.Blazor.Pages
 
             var dialog = await DialogService.ShowAsync<ViewTicketDialog>("View Ticket", parameters, options);
             var result = await dialog.Result;
+
+            if (!result.Canceled)
+            {
+                await dataGrid.ReloadServerData();
+            }
         }
 
         private async Task CreateNewTicket()

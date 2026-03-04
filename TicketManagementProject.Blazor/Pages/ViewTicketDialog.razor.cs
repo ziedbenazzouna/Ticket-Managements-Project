@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using TicketManagementProject.Blazor.Enum;
+using TicketManagementProject.Blazor.Services;
 using TicketManagementProject.Blazor.ViewModels;
 
 namespace TicketManagementProject.Blazor.Pages
@@ -17,16 +18,48 @@ namespace TicketManagementProject.Blazor.Pages
         public TicketViewModel model { get; set; } = new TicketViewModel();
 
         [CascadingParameter] IMudDialogInstance MudDialog { get; set; } = default!;
-        // [Parameter] public TicketViewModel Ticket { get; set; } = new();
 
-        private void Close() => MudDialog.Close();
+        [Inject]
+        private TicketApiService TicketService { get; set; } = default!;
 
-        private Color GetStatutColor(StatutIntervention statut) => statut switch
+        [Inject]
+        private ISnackbar Snackbar { get; set; } = default!;
+
+        [Inject] 
+        private IDialogService DialogService { get; set; }
+
+        private async Task CloturerTicket()
         {
-            StatutIntervention.New => Color.Info,
-            StatutIntervention.Active => Color.Success,
-            StatutIntervention.Closed => Color.Default,
-            _ => Color.Default
-        };
+            // 1. Afficher la boîte de confirmation
+            bool? result = await DialogService.ShowMessageBoxAsync(
+                "Confirmation",
+                "Voulez-vous vraiment clôturer ce ticket ? Cette action est irréversible.",
+                yesText: "Confirmer la clôture",
+                cancelText: "Annuler"
+            );
+
+            if (result == true)
+            {
+                if (string.IsNullOrEmpty(model.Id)) return;
+
+                bool success = await TicketService.PatchTicket(model.Id, "Statut", StatutIntervention.Closed.ToString());
+
+                if (success)
+                {
+                    model.Statut = StatutIntervention.Closed.ToString();
+                    Snackbar.Add("Ticket clôturé !", Severity.Success);
+
+                    // Optionnel : On peut fermer le dialogue de consultation et renvoyer "Ok" 
+                    // pour que la liste principale se rafraîchisse automatiquement.
+                    MudDialog.Close(DialogResult.Ok(true));
+                }
+                else
+                {
+                    Snackbar.Add("Erreur lors de la clôture.", Severity.Error);
+                }
+            }
+        }
+
+        private void Cancel() => MudDialog.Cancel();
     }
 }
