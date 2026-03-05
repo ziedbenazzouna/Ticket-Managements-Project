@@ -80,7 +80,7 @@
                                       Class="flex-grow-1" />
                         <MudIconButton Icon="@Icons.Material.Filled.Send"
                                        Color="Color.Primary"
-                                       OnClick="AjouterCommentaire"
+                                       OnClick="AddComment"
                                        Disabled="@string.IsNullOrWhiteSpace(_newCommentMessage)" />
                     </div>
                 }
@@ -93,7 +93,7 @@
             <MudButton Variant="Variant.Filled"
                        Color="Color.Error"
                        StartIcon="@Icons.Material.Filled.CheckCircle"
-                       OnClick="CloturerTicket"
+                       OnClick="CloseTicket"
                        Class="px-6">
                 Clôturer
             </MudButton>

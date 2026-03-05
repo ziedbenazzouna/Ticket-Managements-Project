@@ -32,7 +32,7 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
         [Inject] private IUserAccessor UserAccessor { get; set; }
 
         private string _newCommentMessage = "";
-        private async Task CloturerTicket()
+        private async Task CloseTicket()
         {
             // 1. Afficher la boîte de confirmation
             bool? result = await DialogService.ShowMessageBoxAsync(
@@ -61,7 +61,7 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
             }
         }
 
-        private async Task AjouterCommentaire()
+        private async Task AddComment()
         {
             if (string.IsNullOrWhiteSpace(_newCommentMessage)) return;
 
