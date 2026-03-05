@@ -13,5 +13,9 @@ namespace TicketManagementProject.API.Entities
         public DateTime Date { get; set; }
         public string Categorie { get; set; }
         public string Statut { get; set; }
+
+        [BsonElement("Commentaires")]
+        [BsonIgnoreIfNull]
+        public List<TicketComment> Commentaires { get; set; } = new();
     }
 }

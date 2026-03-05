@@ -44,6 +44,30 @@
                 </div>
             </CellTemplate>
         </TemplateColumn>
+        <TemplateColumn Title="Comms" SortBy="@(x => x.Commentaires.Count)">
+            <CellTemplate Context="context">
+                <div class="d-flex align-center justify-center" style="height: 100%;">
+                    @if (context.Item.Commentaires != null && context.Item.Commentaires.Any())
+                    {
+                        <MudBadge Content="@context.Item.Commentaires.Count"
+                                  Color="Color.Info"
+                                  Overlap="true"
+                                  Bordered="true"
+                                  Size="Size.Small">
+                            <MudIcon Icon="@Icons.Material.Filled.ChatBubbleOutline"
+                                     Color="Color.Default"
+                                     Size="Size.Small" />
+                        </MudBadge>
+                    }
+                    else
+                    {
+                        <MudIcon Icon="@Icons.Material.Filled.ChatBubbleOutline"
+                                 Style="opacity: 0.2;"
+                                 Size="Size.Small" />
+                    }
+                </div>
+            </CellTemplate>
+        </TemplateColumn>
 
 
         <TemplateColumn CellClass="d-flex justify-end"

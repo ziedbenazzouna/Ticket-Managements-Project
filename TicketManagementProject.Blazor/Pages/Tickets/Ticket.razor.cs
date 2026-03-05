@@ -99,7 +99,7 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
             var ticketView = await TicketService.GetTicket(ticket.Item.Id);
             if (ticketView is null)
             {
-                Snackbar.Add("Something wrong when try finding the ticket", Severity.Error);
+                Snackbar.Add("Un problème est survenu lors de la recherche du ticket", Severity.Error);
                 return;
             }
             var options = new DialogOptions { MaxWidth = MaxWidth.Large };
@@ -111,7 +111,7 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
             {x=> x._date, ticketView.Date}
         };
 
-            var dialog = await DialogService.ShowAsync<ViewTicketDialog>("View Ticket", parameters, options);
+            var dialog = await DialogService.ShowAsync<ViewTicketDialog>("Consulter Ticket", parameters, options);
             var result = await dialog.Result;
 
             if (!result.Canceled)
@@ -130,7 +130,7 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
             {x=> x.model, new TicketViewModel()}
         };
 
-            var dialog = await DialogService.ShowAsync<CreateOrUpdateTicket>("Add Ticket", parameters, options);
+            var dialog = await DialogService.ShowAsync<CreateOrUpdateTicket>("Ajouter Ticket", parameters, options);
             var result = await dialog.Result;
 
             if (result is not null && !result.Canceled)
@@ -144,7 +144,7 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
             var ticketView = await TicketService.GetTicket(ticket.Item.Id);
             if (ticketView is null)
             {
-                Snackbar.Add("Something wrong when try finding the ticket", Severity.Error);
+                Snackbar.Add("Un problème est survenu lors de la recherche du ticket.", Severity.Error);
                 return;
             }
             var options = new DialogOptions { MaxWidth = MaxWidth.Large };
@@ -156,7 +156,7 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
             {x=> x._date, ticketView.Date}
         };
 
-            var dialog = await DialogService.ShowAsync<CreateOrUpdateTicket>("Update Ticket", parameters, options);
+            var dialog = await DialogService.ShowAsync<CreateOrUpdateTicket>("Mettre à jour le ticket", parameters, options);
             var result = await dialog.Result;
 
             if (result is not null && !result.Canceled)
@@ -167,7 +167,7 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
 
         private async Task RemoveTicket(CellContext<TicketViewModel> ticket)
         {
-            var dialog = await DialogService.ShowAsync<RemoveConfirmationDialog>("Remove: " + ticket.Item.Objet +" Of " +ticket.Item.Auteur);
+            var dialog = await DialogService.ShowAsync<RemoveConfirmationDialog>("Retirer: " + ticket.Item.Objet +" de " +ticket.Item.Auteur);
             var result = await dialog.Result;
 
             if (result is not null && !result.Canceled)
@@ -178,12 +178,12 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
                     var deleteResult = await TicketService.DeleteTicket(ticket.Item.Id);
                     if (deleteResult)
                     {
-                        Snackbar.Add("Successfully remove the ticket!", Severity.Success);
+                        Snackbar.Add("Ticket supprimé avec succès !", Severity.Success);
                         await dataGrid.ReloadServerData();
                     }
                     else
                     {
-                        Snackbar.Add("Failed remove the ticket!", Severity.Error);
+                        Snackbar.Add("Impossible de supprimer le ticket !", Severity.Error);
                     }
                 }
             }

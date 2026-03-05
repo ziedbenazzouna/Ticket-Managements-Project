@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using TicketManagementProject.Blazor.Enum;
+using TicketManagementProject.Blazor.Helpers;
 using TicketManagementProject.Blazor.Services;
 using TicketManagementProject.Blazor.ViewModels;
 
@@ -28,6 +29,9 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
         [Inject] 
         private IDialogService DialogService { get; set; }
 
+        [Inject] private IUserAccessor UserAccessor { get; set; }
+
+        private string _newCommentMessage = "";
         private async Task CloturerTicket()
         {
             // 1. Afficher la boîte de confirmation
@@ -48,9 +52,6 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
                 {
                     model.Statut = StatutIntervention.Closed.ToString();
                     Snackbar.Add("Ticket clôturé !", Severity.Success);
-
-                    // Optionnel : On peut fermer le dialogue de consultation et renvoyer "Ok" 
-                    // pour que la liste principale se rafraîchisse automatiquement.
                     MudDialog.Close(DialogResult.Ok(true));
                 }
                 else
@@ -60,6 +61,32 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
             }
         }
 
-        private void Cancel() => MudDialog.Cancel();
+        private async Task AjouterCommentaire()
+        {
+            if (string.IsNullOrWhiteSpace(_newCommentMessage)) return;
+
+            string nomUtilisateur = await UserAccessor.GetCurrentUserNameAsync();
+
+            var nouveauCommentaire = new CommentViewModel
+            {
+                Auteur = nomUtilisateur,
+                Message = _newCommentMessage,
+                Date = DateTime.Now
+            };
+
+            bool success = await TicketService.AddComment(model.Id, nouveauCommentaire, model.Commentaires);
+
+            if (success)
+            {
+                _newCommentMessage = "";
+                Snackbar.Add("Commentaire ajouté !", Severity.Success);
+            }
+            else
+            {
+                Snackbar.Add("Erreur lors de l'ajout", Severity.Error);
+            }
+        }
+
+        private void Cancel() => MudDialog.Close();
     }
 }

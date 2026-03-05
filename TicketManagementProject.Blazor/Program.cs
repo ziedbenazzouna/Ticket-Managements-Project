@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MudBlazor.Services;
 using TicketManagementProject.Blazor;
+using TicketManagementProject.Blazor.Helpers;
 using TicketManagementProject.Blazor.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
@@ -29,6 +30,7 @@ builder.Services.AddScoped(sp =>
     sp.GetRequiredService<IHttpClientFactory>()
       .CreateClient("ApiClient"));
 
+builder.Services.AddScoped<IUserAccessor, UserAccessor>();
 builder.Services.AddScoped<UserApiService>();
 builder.Services.AddScoped<TicketApiService>();
 

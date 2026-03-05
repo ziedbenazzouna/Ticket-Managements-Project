@@ -46,5 +46,12 @@ namespace TicketManagementProject.Blazor.Services
             var response = await _http.PatchAsJsonAsync($"api/tickets/{id}", patchData);
             return response.IsSuccessStatusCode;
         }
+
+        public async Task<bool> AddComment(string ticketId, CommentViewModel newComment, List<CommentViewModel> currentComments)
+        {
+            currentComments ??= new List<CommentViewModel>();
+            currentComments.Add(newComment);
+            return await PatchTicket(ticketId, "Commentaires", currentComments);
+        }
     }
 }

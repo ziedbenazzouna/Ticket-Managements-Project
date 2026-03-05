@@ -42,6 +42,49 @@
                     </MudChip>
                 </div>
             </MudItem>
+
+            <!-- SECTION COMMENTAIRES (Bas) -->
+            <MudItem xs="12">
+                <MudDivider Class="my-4" />
+                <MudText Typo="Typo.subtitle1"><b>Commentaires (@(model.Commentaires?.Count ?? 0))</b></MudText>
+
+                <!-- Zone d'affichage des commentaires existants -->
+                <div style="max-height: 200px; overflow-y: auto;" class="mt-2 px-2">
+                    @if (model.Commentaires == null || !model.Commentaires.Any())
+                    {
+                        <MudText Typo="Typo.body2" Color="Color.Secondary">Aucun commentaire pour le moment.</MudText>
+                    }
+                    else
+                    {
+                        @foreach (var comment in model.Commentaires.OrderByDescending(c => c.Date))
+                        {
+                            <div class="mb-2 pa-2 mud-bg-gray-lighter rounded">
+                                <div class="d-flex justify-space-between">
+                                    <MudText Typo="Typo.caption" Color="Color.Primary"><b>@comment.Auteur</b></MudText>
+                                    <MudText Typo="Typo.caption">@comment.Date.ToString("g")</MudText>
+                                </div>
+                                <MudText Typo="Typo.body2">@comment.Message</MudText>
+                            </div>
+                        }
+                    }
+                </div>
+
+                <!-- Zone de saisie Nouveau Commentaire -->
+                @if (model.StatutEnum != StatutIntervention.Closed)
+                {
+                    <div class="d-flex align-end mt-4">
+                        <MudTextField @bind-Value="_newCommentMessage"
+                                      Label="Ajouter un commentaire..."
+                                      Variant="Variant.Text"
+                                      Lines="1"
+                                      Class="flex-grow-1" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Send"
+                                       Color="Color.Primary"
+                                       OnClick="AjouterCommentaire"
+                                       Disabled="@string.IsNullOrWhiteSpace(_newCommentMessage)" />
+                    </div>
+                }
+            </MudItem>
         </MudGrid>
     </DialogContent>
     <DialogActions>

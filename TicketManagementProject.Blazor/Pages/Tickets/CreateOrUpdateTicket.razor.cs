@@ -47,12 +47,12 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
             var result = await TicketService.CreateTicket(model);
             if (result)
             {
-                Snackbar.Add("Successfully create the ticket!", Severity.Success);
+                Snackbar.Add("Ticket créé avec succès !", Severity.Success);
                 MudDialog.Close();
             }
             else
             {
-                Snackbar.Add("Failed create the ticket!", Severity.Error);
+                Snackbar.Add("Impossible de créer le ticket !", Severity.Error);
             }
         }
 
@@ -61,12 +61,12 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
             var result = await TicketService.UpdateTicket(model);
             if (result)
             {
-                Snackbar.Add("Successfully update the ticket!", Severity.Success);
+                Snackbar.Add("Ticket mis à jour avec succès !", Severity.Success);
                 MudDialog.Close();
             }
             else
             {
-                Snackbar.Add("Failed update the ticket!", Severity.Error);
+                Snackbar.Add("La mise à jour du ticket a échoué !", Severity.Error);
             }
         }
 

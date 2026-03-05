@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Reflection;
 using System.Text.Json;
 using TicketManagementProject.API.Repository.Interfaces;
 using TicketManagementProject.API.Settings;
@@ -55,36 +56,19 @@ namespace TicketManagementProject.API.Repository
 
             foreach (var field in updatedFields)
             {
+                var prop = typeof(T).GetProperty(field.Key, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                if (prop == null) continue;
+
                 object value = field.Value;
 
-                // Convert JsonElement en .NET type si nécessaire
                 if (value is JsonElement je)
                 {
-                    switch (je.ValueKind)
-                    {
-                        case JsonValueKind.String: value = je.GetString(); break;
-                        case JsonValueKind.Number:
-                            if (je.TryGetInt32(out int i)) value = i;
-                            else if (je.TryGetInt64(out long l)) value = l;
-                            else value = je.GetDouble();
-                            break;
-                        case JsonValueKind.True: case JsonValueKind.False: value = je.GetBoolean(); break;
-                        case JsonValueKind.Null: value = null; break;
-                        default: value = je.GetRawText(); break;
-                    }
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                    value = JsonSerializer.Deserialize(je.GetRawText(), prop.PropertyType, options);
                 }
 
-                // Map JSON key → propriété C# (respecte la casse)
-                var prop = typeof(T).GetProperty(field.Key,
-                             System.Reflection.BindingFlags.IgnoreCase |
-                             System.Reflection.BindingFlags.Public |
-                             System.Reflection.BindingFlags.Instance);
-
-                if (prop != null)
-                {
-                    string propName = prop.Name; // Nom exact en C#
-                    updates.Add(Builders<T>.Update.Set(propName, value));
-                }
+                updates.Add(Builders<T>.Update.Set(prop.Name, value));
             }
 
             if (updates.Count == 0)
