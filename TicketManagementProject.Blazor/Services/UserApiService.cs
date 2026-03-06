@@ -22,10 +22,17 @@ namespace TicketManagementProject.Blazor.Services
             return await response.Content.ReadFromJsonAsync<AuthResponseViewModel>();
         }
 
-        public async Task<bool> Register(RegisterViewModel model)
+        public async Task<(bool success, string message)> Register(RegisterViewModel model)
         {
             var response = await _http.PostAsJsonAsync("api/auth/register", model);
-            return response.IsSuccessStatusCode;
+            if (response.IsSuccessStatusCode)
+            {
+                return (true, null);
+            }
+
+            // Récupère le message d'erreur envoyé par le BadRequest(ex.Message)
+            var errorContent = await response.Content.ReadAsStringAsync();
+            return (false, errorContent);
         }
     }
 }

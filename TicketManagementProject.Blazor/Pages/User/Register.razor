@@ -2,15 +2,19 @@
 
 <MudPaper Class="pa-6 mx-auto mt-20" Style="max-width:400px">
     <MudText Typo="Typo.h5" Class="mb-4">Créer un compte</MudText>
-
+    <EditForm Model="@model" OnValidSubmit="HandleRegister">
+            <DataAnnotationsValidator />
     <MudTextField @bind-Value="model.Username"
-                  Label="Nom d'utilisateur"
+                  Label="Email"
+                  InputType="InputType.Email"
+                  For="@(() => model.Username)"
                   Required="true"
                   FullWidth="true" />
 
     <MudTextField @bind-Value="model.Password"
                   Label="Mot de passe"
                   InputType="InputType.Password"
+                  For="@(() => model.Password)"
                   Required="true"
                   FullWidth="true"
                   Class="mt-3" />
@@ -18,23 +22,24 @@
     <MudTextField @bind-Value="model.ConfirmPassword"
                   Label="Confirmer le mot de passe"
                   InputType="InputType.Password"
+                  For="@(() => model.ConfirmPassword)"
                   Required="true"
                   FullWidth="true"
                   Class="mt-3" />
 
-    <MudButton OnClick="HandleRegister"
+    <MudButton ButtonType="ButtonType.Submit"
                Variant="Variant.Filled"
                Color="Color.Primary"
                FullWidth="true"
                Class="mt-4"
-               Disabled="_isProcessing">
+               Disabled="_isProcessing">  
         @if (_isProcessing)
         {
         <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="mr-2" />
         }
         S'inscrire
     </MudButton>
-
+    </EditForm>
     @if (!string.IsNullOrEmpty(errorMessage))
     {
         <MudAlert Severity="Severity.Error" Class="mt-3">@errorMessage</MudAlert>

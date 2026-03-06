@@ -4,7 +4,8 @@ namespace TicketManagementProject.API.DTOs
 {
     public class RegisterDto
     {
-        [Required]
+        [Required(ErrorMessage = "L'adresse email est obligatoire.")]
+        [EmailAddress(ErrorMessage = "Veuillez saisir une adresse email valide.")]
         public string Username { get; set; }
 
         [Required]

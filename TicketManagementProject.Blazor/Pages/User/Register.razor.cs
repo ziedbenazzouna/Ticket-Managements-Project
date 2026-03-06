@@ -34,7 +34,7 @@ namespace TicketManagementProject.Blazor.Pages.User
             _isProcessing = true;
             errorMessage = null;
 
-            var success = await UserService.Register(model);
+            var (success, message) = await UserService.Register(model);
 
             if (success)
             {
@@ -44,7 +44,9 @@ namespace TicketManagementProject.Blazor.Pages.User
             }
             else
             {
-                errorMessage = "Erreur lors de l'inscription. L'utilisateur existe peut-être déjà.";
+                errorMessage = message == "User already exists"
+                ? "Cet utilisateur existe déjà."
+                : "Erreur lors de l'inscription. Veuillez réessayer plus tard.";
             }
             _isProcessing = false;
         }

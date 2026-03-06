@@ -6,7 +6,7 @@
 @inject NavigationManager Navigation
 
 @* Required *@
-<MudThemeProvider />
+<MudThemeProvider Theme="_theme" />
 <MudPopoverProvider />
 
 @* Needed for dialogs *@
@@ -58,6 +58,17 @@
 </div>
 
 @code {
+    private MudTheme _theme = new MudTheme()
+    {
+        Typography = new Typography()
+        {
+            Button = new ButtonTypography()
+            {
+                TextTransform = "none" // Désactive la mise en majuscules automatique
+            }
+        }
+    };
+
     private async Task Logout()
     {
         await AuthProvider.Logout();

@@ -34,6 +34,10 @@ namespace TicketManagementProject.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+            catch (Exception)
+            {
+                return StatusCode(500, "Une erreur interne est survenue");
+            }
         }
 
         [HttpPost("login")]

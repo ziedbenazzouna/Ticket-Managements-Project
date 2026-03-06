@@ -26,11 +26,13 @@ namespace TicketManagementProject.API.Services
             if (existingUser != null)
                 throw new ApplicationException("User already exists");
 
+            var defaultRole = _configuration["UserSettings:DefaultRole"] ?? "User";
+
             var user = new User
             {
                 Username = dto.Username,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
-                Role = "Admin"
+                Role = defaultRole
             };
 
             await _userRepository.CreateAsync(user);

@@ -47,7 +47,7 @@ namespace TicketManagementProject.Blazor.Pages.User
             }
             else
             {
-                errorMessage = "Invalid credentials";
+                errorMessage = "Nom d'utilisateur ou Mot de passe incorrect";
             }
         }
     }
