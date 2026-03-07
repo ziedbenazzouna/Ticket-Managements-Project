@@ -1,10 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
 using System.Text.Json.Serialization;
-using TicketManagementProject.Blazor.Enum;
+using System.Threading.Tasks;
+using TicketManagementProject.Shared.Enum;
 
-namespace TicketManagementProject.Blazor.ViewModels
+namespace TicketManagementProject.Shared.DTOs
 {
-    public class TicketViewModel
+    public class TicketDto
     {
         public string? Id { get; set; }
 
@@ -23,7 +28,7 @@ namespace TicketManagementProject.Blazor.ViewModels
         [Required(ErrorMessage = "Le statut est obligatoire.")]
         public string Statut { get; set; } = StatutIntervention.New.ToString();
 
-        public List<CommentViewModel> Commentaires { get; set; } = new();
+        public List<CommentDto> Commentaires { get; set; } = new();
 
         // Propriétés d'aide pour l'interface UI (Non sérialisées)
         [JsonIgnore]
@@ -40,5 +45,4 @@ namespace TicketManagementProject.Blazor.ViewModels
             set => Statut = value.ToString();
         }
     }
-
 }

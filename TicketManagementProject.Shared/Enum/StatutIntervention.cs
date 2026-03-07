@@ -1,4 +1,4 @@
-﻿namespace TicketManagementProject.Blazor.Enum
+﻿namespace TicketManagementProject.Shared.Enum
 {
     public enum StatutIntervention
     {

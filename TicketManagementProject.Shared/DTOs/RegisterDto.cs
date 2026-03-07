@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TicketManagementProject.Blazor.ViewModels
+namespace TicketManagementProject.Shared.DTOs
 {
-    public class RegisterViewModel
+    public class RegisterDto
     {
         [Required(ErrorMessage = "L'email est obligatoire")]
         [EmailAddress(ErrorMessage = "Format d'email invalide")]

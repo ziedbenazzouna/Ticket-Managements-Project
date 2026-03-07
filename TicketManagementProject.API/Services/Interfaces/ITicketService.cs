@@ -1,13 +1,13 @@
-﻿using TicketManagementProject.API.Entities;
+﻿using TicketManagementProject.Shared.DTOs;
 
 namespace TicketManagementProject.API.Services.Interfaces
 {
     public interface ITicketService
     {
-        Task<IEnumerable<Ticket>> GetAllAsync();
-        Task<Ticket?> GetByIdAsync(string id);
-        Task CreateAsync(Ticket ticket);
-        Task UpdateAsync(string id, Ticket ticket);
+        Task<IEnumerable<TicketDto>> GetAllAsync();
+        Task<TicketDto?> GetByIdAsync(string id);
+        Task CreateAsync(TicketDto ticket);
+        Task UpdateAsync(string id, TicketDto ticket);
         Task PatchAsync(string id, Dictionary<string, object> updatedFields);
         Task DeleteAsync(string id);
     }

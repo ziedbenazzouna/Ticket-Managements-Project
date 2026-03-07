@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TicketManagementProject.API.Entities;
-using TicketManagementProject.API.Repository.Interfaces;
 using TicketManagementProject.API.Services.Interfaces;
+using TicketManagementProject.Shared.DTOs;
 
 namespace TicketManagementProject.API.Controllers
 {
@@ -33,17 +31,17 @@ namespace TicketManagementProject.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Ticket ticket)
+        public async Task<IActionResult> Create(TicketDto dto)
         {
-            await _ticketService.CreateAsync(ticket);
-            return CreatedAtAction(nameof(Get), new { id = ticket.Id }, ticket);
+            await _ticketService.CreateAsync(dto);
+            return CreatedAtAction(nameof(Get), new { id = dto.Id }, dto);
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update(Ticket ticket)
+        public async Task<IActionResult> Update(TicketDto dto)
         {
-            await _ticketService.UpdateAsync(ticket.Id!, ticket);
-            return Ok(ticket);
+            await _ticketService.UpdateAsync(dto.Id!, dto);
+            return Ok(dto);
         }
 
         [HttpPatch("{id}")]

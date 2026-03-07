@@ -1,5 +1,5 @@
 ﻿using MudBlazor;
-using TicketManagementProject.Blazor.Enum;
+using TicketManagementProject.Shared.Enum;
 
 namespace TicketManagementProject.Blazor.Helpers
 {

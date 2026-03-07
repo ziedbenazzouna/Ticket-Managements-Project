@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using TicketManagementProject.API.DTOs;
+using TicketManagementProject.Shared.DTOs;
 using TicketManagementProject.API.Entities;
 using TicketManagementProject.API.Repository.Interfaces;
 using TicketManagementProject.API.Services.Interfaces;

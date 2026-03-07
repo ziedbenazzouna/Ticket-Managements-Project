@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 using TicketManagementProject.Blazor.Enum;
 using TicketManagementProject.Blazor.Services;
-using TicketManagementProject.Blazor.ViewModels;
+using TicketManagementProject.Shared.DTOs;
 
 
 namespace TicketManagementProject.Blazor.Pages.Tickets
@@ -17,7 +17,7 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
         public DateTime? _date { get; set; } = DateTime.Today;
 
         [Parameter]
-        public TicketViewModel model { get; set; } = new TicketViewModel();
+        public TicketDto model { get; set; } = new TicketDto();
 
         [CascadingParameter]
         private IMudDialogInstance MudDialog { get; set; }

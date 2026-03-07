@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TicketManagementProject.Blazor.ViewModels
+namespace TicketManagementProject.Shared.DTOs
 {
-    public class LoginViewModel
+    public class LoginDto
     {
         [Required(ErrorMessage = "L'adresse email est obligatoire")]
         [EmailAddress(ErrorMessage = "Veuillez saisir un email valide")]

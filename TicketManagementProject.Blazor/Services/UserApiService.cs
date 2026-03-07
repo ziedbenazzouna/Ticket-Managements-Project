@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using TicketManagementProject.Blazor.ViewModels;
+using TicketManagementProject.Shared.DTOs;
 
 namespace TicketManagementProject.Blazor.Services
 {
@@ -12,7 +13,7 @@ namespace TicketManagementProject.Blazor.Services
             _http = http;
         }
 
-        public async Task<AuthResponseViewModel?> Login(LoginViewModel model)
+        public async Task<AuthResponseViewModel?> Login(LoginDto model)
         {
             var response = await _http.PostAsJsonAsync("api/auth/login", model);
 
@@ -22,7 +23,7 @@ namespace TicketManagementProject.Blazor.Services
             return await response.Content.ReadFromJsonAsync<AuthResponseViewModel>();
         }
 
-        public async Task<(bool success, string message)> Register(RegisterViewModel model)
+        public async Task<(bool success, string message)> Register(RegisterDto model)
         {
             var response = await _http.PostAsJsonAsync("api/auth/register", model);
             if (response.IsSuccessStatusCode)

@@ -1,5 +1,4 @@
-﻿using TicketManagementProject.API.DTOs;
-using TicketManagementProject.API.Entities;
+﻿using TicketManagementProject.Shared.DTOs;
 
 namespace TicketManagementProject.API.Services.Interfaces
 {

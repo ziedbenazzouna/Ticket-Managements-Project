@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using TicketManagementProject.Blazor.Services;
-using TicketManagementProject.Blazor.ViewModels;
+using TicketManagementProject.Shared.DTOs;
 
 
 namespace TicketManagementProject.Blazor.Pages.User
@@ -19,7 +19,7 @@ namespace TicketManagementProject.Blazor.Pages.User
         private ISnackbar Snackbar { get; set; } = default!;
 
 
-        private RegisterViewModel model = new();
+        private RegisterDto model = new();
         private string? errorMessage;
         private bool _isProcessing;
 

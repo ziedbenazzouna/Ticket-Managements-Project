@@ -1,5 +1,5 @@
 ﻿using System.Net.Http.Json;
-using TicketManagementProject.Blazor.ViewModels;
+using TicketManagementProject.Shared.DTOs;
 
 namespace TicketManagementProject.Blazor.Services
 {
@@ -12,14 +12,14 @@ namespace TicketManagementProject.Blazor.Services
             _http = http;
         }
 
-        public async Task<List<TicketViewModel>?> GetTickets()
+        public async Task<List<TicketDto>?> GetTickets()
         {
-            return await _http.GetFromJsonAsync<List<TicketViewModel>>("api/tickets");            
+            return await _http.GetFromJsonAsync<List<TicketDto>>("api/tickets");            
         }
 
-        public async Task<TicketViewModel?> GetTicket(string id)
+        public async Task<TicketDto?> GetTicket(string id)
         {
-            return await _http.GetFromJsonAsync<TicketViewModel>($"api/tickets/{id}");
+            return await _http.GetFromJsonAsync<TicketDto>($"api/tickets/{id}");
         }
 
         public async Task<bool> DeleteTicket(string id)
@@ -28,13 +28,13 @@ namespace TicketManagementProject.Blazor.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> CreateTicket(TicketViewModel model)
+        public async Task<bool> CreateTicket(TicketDto model)
         {
             var response = await _http.PostAsJsonAsync("api/tickets", model);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> UpdateTicket(TicketViewModel model)
+        public async Task<bool> UpdateTicket(TicketDto model)
         {
             var response = await _http.PutAsJsonAsync("api/tickets", model);
             return response.IsSuccessStatusCode;
@@ -47,9 +47,9 @@ namespace TicketManagementProject.Blazor.Services
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> AddComment(string ticketId, CommentViewModel newComment, List<CommentViewModel> currentComments)
+        public async Task<bool> AddComment(string ticketId, CommentDto newComment, List<CommentDto> currentComments)
         {
-            currentComments ??= new List<CommentViewModel>();
+            currentComments ??= new List<CommentDto>();
             currentComments.Add(newComment);
             return await PatchTicket(ticketId, "Commentaires", currentComments);
         }

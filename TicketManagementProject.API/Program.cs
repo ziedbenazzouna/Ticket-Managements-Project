@@ -1,3 +1,4 @@
+using TicketManagementProject.API;
 using TicketManagementProject.API.Extensions;
 using TicketManagementProject.API.Repository;
 using TicketManagementProject.API.Repository.Interfaces;
@@ -13,6 +14,7 @@ builder.Services.AddScoped<ITicketRepository,TicketRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 builder.Services.ConfigureCors(builder.Configuration).AddAuth(builder.Configuration);
 

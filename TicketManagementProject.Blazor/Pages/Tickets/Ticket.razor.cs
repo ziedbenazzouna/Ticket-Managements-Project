@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
 using TicketManagementProject.Blazor.Enum;
 using TicketManagementProject.Blazor.Services;
-using TicketManagementProject.Blazor.ViewModels;
+using TicketManagementProject.Shared.DTOs;
 
 namespace TicketManagementProject.Blazor.Pages.Tickets
 {
@@ -21,7 +21,7 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
         private ISnackbar Snackbar { get; set; } = default!;
 
 
-        private MudDataGrid<TicketViewModel> dataGrid;
+        private MudDataGrid<TicketDto> dataGrid;
 
         private string searchString = null;
 
@@ -43,7 +43,7 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
         /// <summary>
         /// Chargement des données via API
         /// </summary>
-        private async Task<GridData<TicketViewModel>> ServerReload(GridState<TicketViewModel> state, CancellationToken cancellationToken)
+        private async Task<GridData<TicketDto>> ServerReload(GridState<TicketDto> state, CancellationToken cancellationToken)
         {
             var data = await TicketService.GetTickets();
             await Task.Delay(200); // juste pour UX
@@ -63,13 +63,13 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
             var sortDef = state.SortDefinitions.FirstOrDefault();
             if (sortDef != null)
             {
-                Func<TicketViewModel, object> sortFunc = sortDef.SortBy switch
+                Func<TicketDto, object> sortFunc = sortDef.SortBy switch
                 {
-                    nameof(TicketViewModel.Objet) => e => e.Objet,
-                    nameof(TicketViewModel.Auteur) => e => e.Auteur,
-                    nameof(TicketViewModel.Date) => e => e.Date,
-                    nameof(TicketViewModel.Categorie) => e => e.Categorie,
-                    nameof(TicketViewModel.Statut) => e => e.Statut,
+                    nameof(TicketDto.Objet) => e => e.Objet,
+                    nameof(TicketDto.Auteur) => e => e.Auteur,
+                    nameof(TicketDto.Date) => e => e.Date,
+                    nameof(TicketDto.Categorie) => e => e.Categorie,
+                    nameof(TicketDto.Statut) => e => e.Statut,
                     _ => e => e.Id
                 };
 
@@ -81,7 +81,7 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
             // Pagination
             var pagedData = data.Skip(state.Page * state.PageSize).Take(state.PageSize).ToArray();
 
-            return new GridData<TicketViewModel>
+            return new GridData<TicketDto>
             {
                 TotalItems = totalItems,
                 Items = pagedData
@@ -94,7 +94,7 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
             return dataGrid.ReloadServerData();
         }
 
-        private async Task ViewTicket(CellContext<TicketViewModel> ticket)
+        private async Task ViewTicket(CellContext<TicketDto> ticket)
         {
             var ticketView = await TicketService.GetTicket(ticket.Item.Id);
             if (ticketView is null)
@@ -127,7 +127,7 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
             var parameters = new DialogParameters<CreateOrUpdateTicket>
         {
             {x=> x.Action, UIActionEnum.Insert},
-            {x=> x.model, new TicketViewModel()}
+            {x=> x.model, new TicketDto()}
         };
 
             var dialog = await DialogService.ShowAsync<CreateOrUpdateTicket>("Ajouter Ticket", parameters, options);
@@ -139,7 +139,7 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
             }
         }
 
-        private async Task UpdateTicket(CellContext<TicketViewModel> ticket)
+        private async Task UpdateTicket(CellContext<TicketDto> ticket)
         {
             var ticketView = await TicketService.GetTicket(ticket.Item.Id);
             if (ticketView is null)
@@ -165,7 +165,7 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
             }
         }
 
-        private async Task RemoveTicket(CellContext<TicketViewModel> ticket)
+        private async Task RemoveTicket(CellContext<TicketDto> ticket)
         {
             var dialog = await DialogService.ShowAsync<RemoveConfirmationDialog>("Retirer: " + ticket.Item.Objet +" de " +ticket.Item.Auteur);
             var result = await dialog.Result;

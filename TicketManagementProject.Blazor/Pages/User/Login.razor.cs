@@ -1,7 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using TicketManagementProject.Blazor.Services;
-using TicketManagementProject.Blazor.ViewModels;
+using TicketManagementProject.Shared.DTOs;
 
 
 namespace TicketManagementProject.Blazor.Pages.User
@@ -18,7 +18,7 @@ namespace TicketManagementProject.Blazor.Pages.User
         private CustomAuthStateProvider AuthProvider { get; set; } = default!;
 
 
-        private LoginViewModel model = new();
+        private LoginDto model = new();
         private string? errorMessage;
         private bool isLoading = true;
 

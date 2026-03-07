@@ -1,12 +1,12 @@
 ﻿@page "/ticket"
 
-@using TicketManagementProject.Blazor.ViewModels
+@using TicketManagementProject.Shared.DTOs
 
 <PageTitle>Home</PageTitle>
 
 <h2 class="text-center">Tickets Management</h2>
 
-<MudDataGrid @ref="dataGrid" T="TicketViewModel" ServerData="ServerReload" Filterable="false" Breakpoint="Breakpoint.Sm">
+<MudDataGrid @ref="dataGrid" T="TicketDto" ServerData="ServerReload" Filterable="false" Breakpoint="Breakpoint.Sm">
     <ToolBarContent>
         <MudButton Class="me-2"
                    @onclick="CreateNewTicket"
@@ -103,6 +103,6 @@
     </Columns>
 
     <PagerContent>
-        <MudDataGridPager T="TicketViewModel" />
+        <MudDataGridPager T="TicketDto" />
     </PagerContent>
 </MudDataGrid>
