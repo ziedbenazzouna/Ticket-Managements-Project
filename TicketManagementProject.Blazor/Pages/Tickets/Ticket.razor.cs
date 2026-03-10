@@ -105,11 +105,11 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
             var options = new DialogOptions { MaxWidth = MaxWidth.Large };
 
             var parameters = new DialogParameters<ViewTicketDialog>
-        {
-            {x=> x.Action, UIActionEnum.View},
-            {x=> x.model, ticketView},
-            {x=> x._date, ticketView.Date}
-        };
+            {
+                {x=> x.Action, UIActionEnum.View},
+                {x=> x.model, ticketView},
+                {x=> x._date, ticketView.Date}
+            };
 
             var dialog = await DialogService.ShowAsync<ViewTicketDialog>("Consulter Ticket", parameters, options);
             var result = await dialog.Result;

@@ -30,7 +30,13 @@
         <PropertyColumn Property="x => x.Objet" Title="Objet" />
         <PropertyColumn Property="x => x.Auteur" Title="Auteur" />
         <PropertyColumn Property="x => x.Date" Format="dd MMMM yyyy" Title="Date" />
-        <PropertyColumn Property="x => x.Categorie" />
+        <TemplateColumn Title="Categorie" SortBy="@(x => x.Categorie)">
+            <CellTemplate Context="context">
+                <div style="display: flex; align-items: center; height: 100%;">
+                    @context.Item.Categorie.ToString().Replace("_", " ")
+                </div>
+            </CellTemplate>
+        </TemplateColumn>
         <TemplateColumn Title="Statut" SortBy="@(x => x.Statut)">
             <CellTemplate Context="context">
                 <div style="display: flex; align-items: center; height: 100%;">
