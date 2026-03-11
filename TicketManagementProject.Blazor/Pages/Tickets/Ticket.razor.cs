@@ -53,7 +53,10 @@ namespace TicketManagementProject.Blazor.Pages.Tickets
             {
                 data = data.Where(e =>
                     e.Objet.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-                    e.Auteur.Contains(searchString, StringComparison.OrdinalIgnoreCase)
+                    e.Auteur.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                    e.Date.ToString("dd MMMM yyyy").Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                    e.Statut.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                    e.Categorie.Contains(searchString, StringComparison.OrdinalIgnoreCase)
                 ).ToList();
             }
 

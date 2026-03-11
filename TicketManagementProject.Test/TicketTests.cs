@@ -23,7 +23,7 @@ namespace TicketManagementProject.Test
         {
             var loginDto = new
             {
-                Username = "imen",
+                Username = "mohamed@email.com",
                 Password = "123456"
             };
 
